@@ -15,5 +15,11 @@ In our USENIX 2024 work, SAILR[^1], we not only measured the destructiveness of 
 
 In this talk, we will take a deep dive into the rocky seas that are compiler optimizations. We will explore the worst optimizations for your decompiler, with examples, and how you might reverse them, with demos. Finally, we'll talk about what we learned in the process and how we think compiler optimizations will play a future role in decompilers.
 
+### Useful Links
+- [angr decompiler UI](https://github.com/angr/angr-management)
+- [angr decompiler (code)](https://github.com/angr/angr)
+- [optimization reversing algorithms](https://www.usenix.org/system/files/sec23winter-prepub-301-basque.pdf)
+- [evaluation on decompilers](https://github.com/mahaloz/sailr-eval)
+
 
 [^1]: Basque, Zion Leonahenahe, et al. "Ahoy SAILR! There is no need to DREAM of C: A compiler-aware structuring algorithm for binary decompilation." 33st USENIX Security Symposium (USENIX Security 24). 2024.
