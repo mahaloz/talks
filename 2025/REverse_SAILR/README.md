@@ -1,7 +1,7 @@
 ## Buccaneers of the Binary: Plundering Compiler Optimizations for Decompilation Treasure
 - Conference: REverse 2025
 - [Talk Schedule Link](https://re-verse.sessionize.com/session/776160)
-- [Talk Video (TBA)]()
+- [Talk Video](https://www.youtube.com/watch?v=VP29biKLoSw)
 - Topics: decompilation, reversing, hex-rays, angr, binary ninja, ghidra, optimizations
 
 ### Abstract
