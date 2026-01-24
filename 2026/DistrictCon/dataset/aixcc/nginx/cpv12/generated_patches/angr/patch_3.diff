@@ -1,0 +1,27 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 1a15795..731f4f5 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -55,14 +55,20 @@ unsigned long long ngx_sendfile_r(struct_2 *a0, struct_0 *ptr, unsigned long lon
+     else
+     {
+         lseek64(ptr->field_40->field_0, 0, 0);
+-        v3 = ngx_alloc(100, a0->field_60);
++        unsigned long long buffer_size = a2;
++        if (buffer_size == 0) {
++            buffer_size = 1;  // Ensure minimum allocation
++        }
++        
++        v3 = ngx_alloc(buffer_size, a0->field_60);
+         if (!v3)
+         {
+             v7 = -1;
+             return v7;
+         }
++        
+         v1 = ptr->field_10 + a2 - 1;
+-        for (i = 0; v1 >= ptr->field_10; i += 1)
++        for (i = 0; i < a2 && v1 >= ptr->field_10; i += 1)
+         {
+             v3[i] = v4[v1];
+             v1 -= 1;

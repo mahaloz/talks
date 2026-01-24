@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_http_validate_from": {
+      "ged": 39
+    }
+  },
+  "ghidra": {
+    "ngx_http_validate_from": {
+      "ged": 9
+    }
+  },
+  "ida": {
+    "ngx_http_validate_from": {
+      "ged": 7
+    }
+  }
+}

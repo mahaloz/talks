@@ -1,0 +1,39 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 4fe71c9..f331d5f 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -28,7 +28,7 @@ void ngx_http_script_regex_end_code(long *param_1)
+           ngx_log_error_core(4,*(undefined8 *)(*(long *)(lVar2 + 0x20) + 0x60),0,
+                              "the rewritten URI is too long");
+         }
+-        *local_10 = (long)&ngx_http_script_exit_code;
++        *local_10 = (long)ngx_http_script_exit_code;
+         local_10[9] = 500;
+       }
+       if ((*(byte *)(lVar1 + 8) >> 2 & 1) == 0) {
+@@ -63,8 +63,8 @@ void ngx_http_script_regex_end_code(long *param_1)
+           ngx_log_error_core(4,*(undefined8 *)(*(long *)(lVar2 + 0x20) + 0x60),0,
+                              "the rewritten URI has a zero length");
+         }
+-        *local_10 = (long)&ngx_http_script_exit_code;
+-        local_10[9] = 500;
++      *local_10 = (long)ngx_http_script_exit_code;
++      local_10[9] = 500;
+         return;
+       }
+       ngx_http_set_exten(lVar2);
+@@ -107,7 +107,7 @@ void ngx_http_script_regex_end_code(long *param_1)
+     uVar6 = ngx_list_push(lVar2 + 0x210);
+     *(undefined8 *)(lVar2 + 0x2b8) = uVar6;
+     if (*(long *)(lVar2 + 0x2b8) == 0) {
+-      *local_10 = (long)&ngx_http_script_exit_code;
++      *local_10 = (long)ngx_http_script_exit_code;
+       local_10[9] = 500;
+     }
+     else {
+@@ -124,5 +124,3 @@ void ngx_http_script_regex_end_code(long *param_1)
+   return;
+ }
+ 
+-
+-

@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_http_script_regex_end_code": {
+      "ged": 21
+    }
+  },
+  "ghidra": {
+    "ngx_http_script_regex_end_code": {
+      "ged": 39
+    }
+  },
+  "ida": {
+    "ngx_http_script_regex_end_code": {
+      "ged": 37
+    }
+  }
+}

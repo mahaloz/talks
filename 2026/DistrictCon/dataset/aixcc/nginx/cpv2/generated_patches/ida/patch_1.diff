@@ -1,0 +1,15 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 8503e20..c7284f5 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -32,8 +32,8 @@ ngx_int_t __cdecl ngx_http_auth_basic_user(ngx_http_request_t *r)
+       }
+       if ( encoded.len )
+       {
+-        auth.len = 16;
+-        auth.data = (u_char *)ngx_pnalloc(ra->pool, 0x11u);
++        /* Base64 decoding: 4 chars -> 3 bytes, plus null terminator */
++        auth.data = (u_char *)ngx_pnalloc(ra->pool, encoded.len + 1);
+         if ( auth.data )
+         {
+           if ( ngx_decode_base64(&auth, &encoded) )

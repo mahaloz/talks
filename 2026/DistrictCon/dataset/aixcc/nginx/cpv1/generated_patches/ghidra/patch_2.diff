@@ -1,0 +1,49 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 619c50b..094f202 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -13,14 +13,18 @@ undefined8 ngx_http_validate_from(ulong *param_1,undefined8 param_2,long param_3
+   
+   uVar2 = param_1[1];
+   local_4c = 0;
++  byte *buffer_start;
++  
+   if (param_3 == 0) {
+     local_38 = (byte *)param_1[1];
++    buffer_start = local_38;
+   }
+   else {
+     local_38 = (byte *)ngx_palloc(param_2,*param_1);
+     if (local_38 == (byte *)0x0) {
+       return 0xffffffffffffffff;
+     }
++    buffer_start = local_38;
+   }
+   local_48 = 0;
+   do {
+@@ -77,7 +81,19 @@ undefined8 ngx_http_validate_from(ulong *param_1,undefined8 param_2,long param_3
+           return 0xfffffffffffffffb;
+         }
+         local_4c = 2;
+-        for (local_38 = local_38 + -2; *local_38 != 0x2e; local_38 = local_38 + -1) {
++        local_38 = local_38 + -2;
++        
++        /* Ensure we don't go before the start of the buffer */
++        if (local_38 < buffer_start) {
++          return 0xfffffffffffffffb;
++        }
++        
++        /* Search for previous dot with boundary check */
++        while (*local_38 != 0x2e) {
++          local_38 = local_38 + -1;
++          if (local_38 < buffer_start) {
++            return 0xfffffffffffffffb;
++          }
+         }
+       }
+       else {
+@@ -115,4 +131,3 @@ undefined8 ngx_http_validate_from(ulong *param_1,undefined8 param_2,long param_3
+ }
+ 
+ 
+-

@@ -1,0 +1,12 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index eb3c8e2..daa0b22 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -16,6 +16,7 @@ ngx_int_t __cdecl ngx_http_process_prefer(ngx_http_request_t *r, ngx_table_elt_t
+         &r->headers_in.prefer->key,
+         &r->headers_in.prefer->value);
+     free(r->headers_in.prefer);
++    r->headers_in.prefer = NULL;
+     return 0;
+   }
+   else

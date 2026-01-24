@@ -1,0 +1,37 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 0215857..87ce283 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -20,8 +20,30 @@ ngx_int_t __cdecl ngx_http_trace_handler(ngx_http_request_t *r)
+   ngx_http_request_t *ra; // [rsp+70h] [rbp-10h]
+ 
+   ra = r;
+-  b = ngx_create_temp_buf(r->pool, 0xC8u);
+-  if ( !b )
++  /* Calculate required buffer size */
++  size_t size = ra->request_line.len + 1; /* request line + newline */
++  
++  /* Calculate size needed for headers */
++  ngx_list_part_t *calc_part = &ra->headers_in.headers.part;
++  ngx_table_elt_t *calc_header = (ngx_table_elt_t *)calc_part->elts;
++  ngx_uint_t calc_i;
++  
++  for (calc_i = 0; ; calc_i++) {
++    if (calc_i >= calc_part->nelts) {
++      if (!calc_part->next) {
++        break;
++      }
++      calc_part = calc_part->next;
++      calc_header = (ngx_table_elt_t *)calc_part->elts;
++      calc_i = 0;
++    }
++    
++    size += calc_header[calc_i].key.len + calc_header[calc_i].value.len + 3; /* key + ": " + value + newline */
++  }
++  
++  /* Allocate buffer with calculated size */
++  b = ngx_create_temp_buf(r->pool, size);
++  if (!b)
+     return 500;
+   last = b->last;
+   memcpy(last, ra->request_line.data, ra->request_line.len);

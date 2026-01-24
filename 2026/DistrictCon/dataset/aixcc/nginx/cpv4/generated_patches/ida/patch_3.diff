@@ -1,0 +1,37 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 0be6c7e..db1891c 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -16,20 +16,29 @@ ngx_int_t __cdecl ngx_http_set_browser_cookie(ngx_http_request_t *r)
+   browser_cookie->next = 0;
+   browser_cookie->key.len = 14;
+   browser_cookie->key.data = (u_char *)"Browser-Cookie";
+-  browser_cookie->value.data = (u_char *)ngx_pnalloc(r->pool, 0x2Bu);
++  size_t buffer_size = 0x2B; // Default size for the basic format
++  
++  if ( ((*((_WORD *)&r->headers_in + 196) >> 10) & 1) != 0 && r->headers_in.cookie ) {
++    // Calculate required buffer size including cookie data
++    buffer_size += r->headers_in.cookie->value.len;
++  }
++  
++  browser_cookie->value.data = (u_char *)ngx_pnalloc(r->pool, buffer_size);
+   if ( browser_cookie->value.data )
+   {
+     if ( ((*((_WORD *)&r->headers_in + 196) >> 10) & 1) != 0 && r->headers_in.cookie )
+-      browser_cookie->value.len = ngx_sprintf(
++      browser_cookie->value.len = ngx_snprintf(
+                                     browser_cookie->value.data,
++                                    buffer_size,
+                                     "\"%xT-%xO\":%s",
+                                     r->headers_out.last_modified_time,
+                                     r->headers_out.content_length_n,
+                                     (const char *)r->headers_in.cookie->value.data)
+                                 - browser_cookie->value.data;
+     else
+-      browser_cookie->value.len = ngx_sprintf(
++      browser_cookie->value.len = ngx_snprintf(
+                                     browser_cookie->value.data,
++                                    buffer_size,
+                                     "\"%xT-%xO\"",
+                                     r->headers_out.last_modified_time,
+                                     r->headers_out.content_length_n)

@@ -1,0 +1,24 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index bb04ff2..7a15d95 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -32,14 +32,17 @@ undefined8 ngx_sendfile_r(long param_1,long param_2,undefined8 param_3)
+       }
+       else {
+         lseek64(**(int **)(local_20 + 0x40),0,0);
+-        __ptr = (void *)ngx_alloc(100,*(undefined8 *)(local_18 + 0x60));
++        __ptr = (void *)ngx_alloc((size_t)local_28,*(undefined8 *)(local_18 + 0x60));
+         if (__ptr == (void *)0x0) {
++          ngx_pfree(*(undefined8 *)(local_18 + 0x68),__buf);
+           local_10 = 0xffffffffffffffff;
+         }
+         else {
+           local_d4 = (int)*(undefined8 *)(local_20 + 0x10) + (int)local_28;
+           local_d8 = 0;
+-          while (local_d4 = local_d4 + -1, *(long *)(local_20 + 0x10) <= (long)local_d4) {
++          while ((local_d4 = local_d4 + -1, *(long *)(local_20 + 0x10) <= (long)local_d4) && 
++                 (local_d8 < (int)local_28) && 
++                 ((long)local_d4 < local_b8.st_size)) {
+             *(undefined1 *)((long)__ptr + (long)local_d8) =
+                  *(undefined1 *)((long)__buf + (long)local_d4);
+             local_d8 = local_d8 + 1;

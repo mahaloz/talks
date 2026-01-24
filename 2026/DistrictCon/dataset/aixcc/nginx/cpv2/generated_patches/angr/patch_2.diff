@@ -1,0 +1,26 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index f0e6474..c5f6794 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -51,9 +51,10 @@ unsigned long long ngx_http_auth_basic_user(struct_3 *ptr)
+     }
+     if (!ptr->field_160)
+     {
+-        ptr->field_1b0 = &g_571ac9.padding_0[0];
+-        v6 = -5;
+-        return v6;
++            ptr->field_1b0 = &g_571ac9.padding_0[0];
++            ngx_pfree(ptr->field_70, v5);
++            v6 = -5;
++            return v6;
+     }
+     v2 = ptr->field_160->field_18;
+     cur = ptr->field_160->field_20;
+@@ -87,6 +88,7 @@ unsigned long long ngx_http_auth_basic_user(struct_3 *ptr)
+         else if (ngx_decode_base64(&v4, &v2))
+         {
+             ptr->field_1b0 = &g_571ac9.padding_0[0];
++            ngx_pfree(ptr->field_70, v5);
+             v6 = -5;
+             return v6;
+         }

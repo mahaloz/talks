@@ -1,0 +1,19 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 2e21404..80f602b 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -39,6 +39,14 @@ unsigned long long ngx_mail_pop3_user(struct_1 *ptr, struct_2 *a1)
+     }
+     v0 = ptr->field_120;
+     *((unsigned long long *)&ptr->field_60) = v0->field_0;
++    
++    // Check if the size is too large
++    if (*((long long *)&ptr->field_60) > 100)
++    {
++        v1 = -1;
++        return v1;
++    }
++    
+     ptr->field_68 = ngx_pnalloc(a1->field_68, 100);
+     if (!ptr->field_68)
+     {

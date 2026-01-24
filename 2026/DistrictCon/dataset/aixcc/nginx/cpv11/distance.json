@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_init_cycle": {
+      "ged": 260
+    }
+  },
+  "ghidra": {
+    "ngx_init_cycle": {
+      "ged": 291
+    }
+  },
+  "ida": {
+    "ngx_init_cycle": {
+      "ged": 212
+    }
+  }
+}

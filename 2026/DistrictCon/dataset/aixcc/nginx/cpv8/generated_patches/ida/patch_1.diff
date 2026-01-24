@@ -1,0 +1,16 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 10079f0..e764d19 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -6,7 +6,11 @@ ngx_int_t __cdecl ngx_mail_pop3_user(ngx_mail_session_t *s, ngx_connection_t *c)
+   if ( s->args.nelts != 1 )
+     return 20;
+   arg = (ngx_str_t *)s->args.elts;
++  if (arg->len > 0x64u) {
++    s->login.len = 0x64u;  // Limit to 100 bytes
++  } else {
+   s->login.len = arg->len;
++  }
+   s->login.data = (u_char *)ngx_pnalloc(c->pool, 0x64u);
+   if ( !s->login.data )
+     return -1;

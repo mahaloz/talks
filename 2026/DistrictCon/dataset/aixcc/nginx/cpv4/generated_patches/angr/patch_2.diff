@@ -1,0 +1,13 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 10dce17..db9de78 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -51,7 +51,7 @@ unsigned long long ngx_http_set_browser_cookie(struct_1 *a0)
+     }
+     if (((char)(a0->field_208 >> 10) & 1) && a0->field_1a0)
+     {
+-        v4 = ngx_sprintf(ptr[4], "\"%xT-%xO\":%s", a0->field_360, a0->field_348, a0->field_1a0->field_20, v3);
++        v4 = ngx_sprintf(ptr[4], "\"%xT-%xO\":%s", a0->field_360, a0->field_348, a0->field_1a0->field_20);
+         ptr[3] = v4 - ptr[4];
+     }
+     else

@@ -1,0 +1,12 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index cc4392f..610c606 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -25,6 +25,7 @@ ngx_http_userid_ctx_t *__cdecl ngx_http_userid_get_uid(ngx_http_request_t *r, ng
+   {
+     src = ctx->cookie;
+     dst.data = (u_char *)ctx;
++    dst.len = sizeof(ngx_http_userid_ctx_t) - offsetof(ngx_http_userid_ctx_t, uid_got);
+     if ( ngx_decode_base64(&dst, &src) == -1 )
+     {
+       if ( ra->connection->log->log_level >= 4 )

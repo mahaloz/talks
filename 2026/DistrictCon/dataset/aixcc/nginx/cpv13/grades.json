@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "patch_1.diff": "wrong",
+    "patch_2.diff": "wrong",
+    "patch_3.diff": "wrong"
+  },
+  "ghidra": {
+    "patch_1.diff": "wrong",
+    "patch_2.diff": "wrong",
+    "patch_3.diff": "wrong"
+  },
+  "ida": {
+    "patch_1.diff": "wrong",
+    "patch_2.diff": "wrong",
+    "patch_3.diff": "wrong"
+  }
+}

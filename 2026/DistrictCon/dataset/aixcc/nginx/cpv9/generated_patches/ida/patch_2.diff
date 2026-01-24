@@ -1,0 +1,33 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 5063748..d2d88e0 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -56,8 +56,18 @@ ngx_int_t __cdecl ngx_black_list_remove(ngx_black_list_t **black_list, u_char *r
+   ngx_black_list_t *reader; // [rsp+10h] [rbp-20h]
+ 
+   reader = *black_list;
+-  if ( !*black_list || strcmp((const char *)remove_ip, (const char *)reader->IP->data) )
++  if ( !*black_list )
++        return -1;
++    
++      if ( !strcmp((const char *)remove_ip, (const char *)reader->IP->data) )
+   {
++    // First node matches - update the head pointer
++    *black_list = reader->next;
++    if ( reader->next )
++      reader->next->prev = NULL;
++    }
++  else
++    {
+     for ( reader = reader->next; ; reader = reader->next )
+     {
+       v3 = 0;
+@@ -67,7 +77,7 @@ ngx_int_t __cdecl ngx_black_list_remove(ngx_black_list_t **black_list, u_char *r
+         return -1;
+       if ( !strcmp((const char *)remove_ip, (const char *)reader->IP->data) )
+         break;
+-    }
++  }
+     if ( reader->prev )
+       reader->prev->next = reader->next;
+     if ( reader->next )

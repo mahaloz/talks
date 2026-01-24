@@ -1,0 +1,16 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 93c2f8a..aba33f3 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -917,8 +917,10 @@ struct_2 * ngx_init_cycle(struct_2 *p)
+             }
+             fclose(fp);
+             v18 = *((long long *)(ptr->field_0 + off * 8));
+-            if (!v18->field_10)
++            if (!v18->field_10) {
+                 free(ptr->field_88);
++                ptr->field_88 = NULL;
++            }
+             if (!*((long long *)&ngx_test_config))
+             {
+                 if (p->field_0)

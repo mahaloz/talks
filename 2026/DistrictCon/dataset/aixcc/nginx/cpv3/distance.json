@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_http_trace_handler": {
+      "ged": 3
+    }
+  },
+  "ghidra": {
+    "ngx_http_trace_handler": {
+      "ged": 12
+    }
+  },
+  "ida": {
+    "ngx_http_trace_handler": {
+      "ged": 3
+    }
+  }
+}

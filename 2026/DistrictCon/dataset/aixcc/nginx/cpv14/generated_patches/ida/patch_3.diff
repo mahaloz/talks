@@ -1,0 +1,31 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 554fda8..77297c3 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -68,8 +68,10 @@ void __cdecl ngx_http_script_regex_end_code(ngx_http_script_engine_t *e)
+     }
+     else
+     {
+-      ea->ip = (u_char *)&ngx_http_script_exit_code;
+-      ea->status = 500;
++  ea->ip = (u_char *)&ngx_http_script_exit_code;
++  ea->status = 500;
++  return;
++    return;
+     }
+     return;
+   }
+@@ -98,6 +100,7 @@ void __cdecl ngx_http_script_regex_end_code(ngx_http_script_engine_t *e)
+         ngx_log_error_core(4u, r->connection->log, 0, "the rewritten URI is too long");
+       ea->ip = (u_char *)&ngx_http_script_exit_code;
+       ea->status = 500;
++      return;
+     }
+     if ( (code[8] & 4) == 0 )
+       r->args.len = 0;
+@@ -124,5 +127,3 @@ LABEL_41:
+   ea->ip = (u_char *)&ngx_http_script_exit_code;
+   ea->status = 500;
+ }
+-
+-

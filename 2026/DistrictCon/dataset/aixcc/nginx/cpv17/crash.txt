@@ -1,0 +1,84 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 992750188
+INFO: Loaded 1 modules   (29718 inline 8-bit counters): 29718 [0x5f1e34d1d638, 0x5f1e34d24a4e), 
+INFO: Loaded 1 PC tables (29718 PCs): 29718 [0x5f1e34d24a50,0x5f1e34d98bb0), 
+../harnesses/smtp_harness: Running 1 inputs 1 time(s) each.
+Running: ./poc_input
+2026/01/19 17:29:58 [alert] 0#0: select ready != events: 3:2
+=================================================================
+==132==ERROR: AddressSanitizer: heap-use-after-free on address 0x513000000060 at pc 0x5f1e34bf6052 bp 0x7ffd0ca00610 sp 0x7ffd0ca00608
+READ of size 8 at 0x513000000060 thread T0
+    #0 0x5f1e34bf6051 in ngx_mail_smtp_auth_state /src/harnesses/bld/src/mail/ngx_mail_smtp_handler.c:556:12
+    #1 0x5f1e349e0b29 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #2 0x5f1e34966664 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/smtp_harness.cc:269:5
+    #3 0x5f1e3481a580 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #4 0x5f1e348057f5 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #5 0x5f1e3480b28f in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #6 0x5f1e34836532 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #7 0x757fbbb21082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+    #8 0x5f1e347fd9dd in _start (/host/harnesses/smtp_harness+0x16d9dd)
+
+0x513000000060 is located 32 bytes inside of 384-byte region [0x513000000040,0x5130000001c0)
+freed by thread T0 here:
+    #0 0x5f1e349260b6 in free /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:52:3
+    #1 0x5f1e3496feea in ngx_destroy_pool /src/harnesses/bld/src/core/ngx_palloc.c:85:13
+    #2 0x5f1e34bf5ed4 in ngx_mail_smtp_noop /src/harnesses/bld/src/mail/ngx_mail_smtp_handler.c:836:9
+    #3 0x5f1e34bf5ed4 in ngx_mail_smtp_auth_state /src/harnesses/bld/src/mail/ngx_mail_smtp_handler.c:516:22
+    #4 0x5f1e349e0b29 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #5 0x5f1e34966664 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/smtp_harness.cc:269:5
+    #6 0x5f1e3481a580 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #7 0x5f1e348057f5 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #8 0x5f1e3480b28f in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #9 0x5f1e34836532 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #10 0x757fbbb21082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+previously allocated by thread T0 here:
+    #0 0x5f1e3492634f in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x5f1e349eee7f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x5f1e349701c1 in ngx_palloc_large /src/harnesses/bld/src/core/ngx_palloc.c:220:9
+    #3 0x5f1e34970bb7 in ngx_palloc /src/harnesses/bld/src/core/ngx_palloc.c:131:12
+    #4 0x5f1e34970bb7 in ngx_pcalloc /src/harnesses/bld/src/core/ngx_palloc.c:302:9
+    #5 0x5f1e34be2aa3 in ngx_mail_init_connection /src/harnesses/bld/src/mail/ngx_mail_handler.c:124:9
+    #6 0x5f1e349e1edb in ngx_event_accept /src/harnesses/bld/src/event/ngx_event_accept.c:313:9
+    #7 0x5f1e349e0b29 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #8 0x5f1e349de37b in ngx_process_events_and_timers /src/harnesses/bld/src/event/ngx_event.c:255:5
+    #9 0x5f1e349665db in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/smtp_harness.cc:258:3
+    #10 0x5f1e3481a580 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #11 0x5f1e348057f5 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #12 0x5f1e3480b28f in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #13 0x5f1e34836532 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #14 0x757fbbb21082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /src/harnesses/bld/src/mail/ngx_mail_smtp_handler.c:556:12 in ngx_mail_smtp_auth_state
+Shadow bytes around the buggy address:
+  0x512ffffffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x512ffffffe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x512ffffffe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x512fffffff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x512fffffff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x513000000000: fa fa fa fa fa fa fa fa fd fd fd fd[fd]fd fd fd
+  0x513000000080: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x513000000100: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x513000000180: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x513000000200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x513000000280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==132==ABORTING

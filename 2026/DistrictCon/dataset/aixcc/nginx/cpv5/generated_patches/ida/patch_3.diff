@@ -1,0 +1,34 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 2229682..599ca7a 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -6,10 +6,14 @@ ngx_con_his_t *__cdecl ngx_get_con_his(ngx_con_his_t *con_his_list, size_t numbe
+ 
+   target = con_his_list;
+   counter = 0;
+-  if ( !con_his_list || number <= 1 )
++  if ( !con_his_list )
++    return NULL;
++  if ( number == 0 )
+     return con_his_list;
+-  while ( counter <= number )
++  while ( counter < number && target != NULL )
+   {
++    if ( target->next == NULL )
++      return target;
+     target = target->next;
+     ++counter;
+   }
+@@ -23,6 +27,12 @@ ngx_int_t __cdecl ngx_http_get_last_ip_variable(ngx_http_request_t *r, ngx_http_
+   ngx_con_his_t *con_his; // rax
+ 
+   con_his = ngx_get_con_his(r->connection_history, r->request_counter);
++  if ( con_his == NULL )
++  {
++    v->data = NULL;
++    *(_DWORD *)v = 0;
++    return 0;
++  }
+   v->data = con_his->addr_text.data;
+   *(_DWORD *)v = con_his->addr_text.len & 0xFFFFFFF | *(_DWORD *)v & 0xF0000000;
+   return 0;

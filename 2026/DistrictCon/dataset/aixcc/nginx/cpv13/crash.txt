@@ -1,0 +1,28 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1013788732
+INFO: Loaded 1 modules   (29718 inline 8-bit counters): 29718 [0x63b3a1a8a6d8, 0x63b3a1a91aee), 
+INFO: Loaded 1 PC tables (29718 PCs): 29718 [0x63b3a1a91af0,0x63b3a1b05c50), 
+../harnesses/mail_request_harness: Running 1 inputs 1 time(s) each.
+Running: poc_input
+2026/01/19 17:30:19 [alert] 0#0: select ready != events: 3:2
+2026/01/19 17:30:19 [alert] 0#0: select ready != events: 3:2
+2026/01/19 17:30:19 [alert] 0#0: select ready != events: 3:2
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==139==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000011 (pc 0x63b3a195cec6 bp 0x7ffc42eeeb70 sp 0x7ffc42eeeb30 T0)
+==139==The signal is caused by a READ memory access.
+==139==Hint: address points to the zero page.
+    #0 0x63b3a195cec6 in ngx_mail_pop3_pass /src/harnesses/bld/src/mail/ngx_mail_pop3_handler.c:377:25
+    #1 0x63b3a195ba7c in ngx_mail_pop3_auth_state /src/harnesses/bld/src/mail/ngx_mail_pop3_handler.c:221:22
+    #2 0x63b3a174db29 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #3 0x63b3a16d3664 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/mail_request_harness.cc:277:5
+    #4 0x63b3a1587580 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #5 0x63b3a15727f5 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #6 0x63b3a157828f in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #7 0x63b3a15a3532 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #8 0x7892223ca082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+    #9 0x63b3a156a9dd in _start (/host/harnesses/mail_request_harness+0x16d9dd)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /src/harnesses/bld/src/mail/ngx_mail_pop3_handler.c:377:25 in ngx_mail_pop3_pass
+==139==ABORTING

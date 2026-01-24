@@ -1,0 +1,27 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 611f5db..3b16673 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -85,12 +85,18 @@ undefined8 ngx_black_list_remove(undefined8 *param_1,char *param_2)
+     if (!bVar2) break;
+     iVar1 = strcmp(param_2,*(char **)(*local_28 + 8));
+     if (iVar1 == 0) {
+-      if (local_28[2] != 0) {
+-        *(long *)(local_28[2] + 8) = local_28[1];
++      long next_node = local_28[1];
++      long prev_node = local_28[2];
++      
++      // Update linked list pointers before freeing
++      if (prev_node != 0) {
++        *(long *)(prev_node + 8) = next_node;
+       }
+-      if (local_28[1] != 0) {
+-        *(long *)(local_28[1] + 0x10) = local_28[2];
++      if (next_node != 0) {
++        *(long *)(next_node + 0x10) = prev_node;
+       }
++      
++      // Free memory
+       memset(*(void **)(*local_28 + 8),0,*(size_t *)*local_28);
+       free(*(void **)(*local_28 + 8));
+       *(undefined8 *)(*local_28 + 8) = 0;

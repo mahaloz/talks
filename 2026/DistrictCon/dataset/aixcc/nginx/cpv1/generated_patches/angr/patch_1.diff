@@ -1,0 +1,28 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 54d52f6..0a9bbc7 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -108,8 +108,22 @@ LABEL_4a3cd6:
+                     break;
+                 case 46:
+                     v0 = 2;
+-                    for (cur -= 2; *((char *)cur) != 46; cur -= 1);
++                    // Store the original position before backtracking
++                    void* orig_cur = cur;
++                    // Start backtracking from 2 positions back
++                    cur -= 2;
++                    // Add bounds checking to prevent buffer overflow
++                    void* buffer_start = a2 ? ngx_palloc(a1, 0) : ptr->field_8;
++                    // Only backtrack if we're still within the buffer
++                    while (cur >= buffer_start && *((char *)cur) != 46) {
++                        cur -= 1;
++                    }
++                    // If we went out of bounds or didn't find a dot, reset to original position
++                    if (cur < buffer_start) {
++                        cur = orig_cur;
++                    } else {
+                     cur += 1;
++                    }
+ LABEL_4a3cd6:
+ LABEL_4a3e47:
+                     break;

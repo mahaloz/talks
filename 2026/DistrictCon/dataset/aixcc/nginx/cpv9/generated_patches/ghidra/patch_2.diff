@@ -1,0 +1,13 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 611f5db..d1a62d6 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -85,6 +85,8 @@ undefined8 ngx_black_list_remove(undefined8 *param_1,char *param_2)
+     if (!bVar2) break;
+     iVar1 = strcmp(param_2,*(char **)(*local_28 + 8));
+     if (iVar1 == 0) {
++      long *next_node = (long *)local_28[1];
++      
+       if (local_28[2] != 0) {
+         *(long *)(local_28[2] + 8) = local_28[1];
+       }

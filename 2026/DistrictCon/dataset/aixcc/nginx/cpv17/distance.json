@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_mail_smtp_noop": {
+      "ged": 0
+    }
+  },
+  "ghidra": {
+    "ngx_mail_smtp_noop": {
+      "ged": 5
+    }
+  },
+  "ida": {
+    "ngx_mail_smtp_noop": {
+      "ged": 0
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_http_userid_get_uid": {
+      "ged": 32
+    }
+  },
+  "ghidra": {
+    "ngx_http_userid_get_uid": {
+      "ged": 22
+    }
+  },
+  "ida": {
+    "ngx_http_userid_get_uid": {
+      "ged": 24
+    }
+  }
+}

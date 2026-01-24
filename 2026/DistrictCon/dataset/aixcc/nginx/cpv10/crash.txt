@@ -1,0 +1,48 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1304868684
+INFO: Loaded 1 modules   (29681 inline 8-bit counters): 29681 [0x5ded2045f238, 0x5ded20466629), 
+INFO: Loaded 1 PC tables (29681 PCs): 29681 [0x5ded20466630,0x5ded204da540), 
+../harnesses/pov_harness: Running 1 inputs 1 time(s) each.
+Running: poc_input
+=================================================================
+==186==ERROR: AddressSanitizer: attempting double-free on 0x506000006f20 in thread T0:
+    #0 0x5ded20067116 in free /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:52:3
+    #1 0x5ded2018d8f0 in ngx_http_process_prefer /src/harnesses/bld/src/http/ngx_http_request.c:4018:9
+    #2 0x5ded2019f9b9 in ngx_http_process_request_headers /src/harnesses/bld/src/http/ngx_http_request.c:1499:23
+    #3 0x5ded201213c9 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #4 0x5ded200a76a4 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:325:5
+    #5 0x5ded1ff5b5e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x5ded1ff46855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x5ded1ff4c2ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x5ded1ff77592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x73d948f83082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+    #10 0x5ded1ff3ea3d in _start (/host/harnesses/pov_harness+0x16da3d)
+
+0x506000006f20 is located 0 bytes inside of 56-byte region [0x506000006f20,0x506000006f58)
+freed by thread T0 here:
+    #0 0x5ded20067116 in free /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:52:3
+    #1 0x5ded2018d8f0 in ngx_http_process_prefer /src/harnesses/bld/src/http/ngx_http_request.c:4018:9
+    #2 0x5ded2019f9b9 in ngx_http_process_request_headers /src/harnesses/bld/src/http/ngx_http_request.c:1499:23
+    #3 0x5ded201213c9 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #4 0x5ded200a76a4 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:325:5
+    #5 0x5ded1ff5b5e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x5ded1ff46855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x5ded1ff4c2ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x5ded1ff77592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x73d948f83082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+previously allocated by thread T0 here:
+    #0 0x5ded200673af in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x5ded2012f71f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x5ded2018d7a8 in ngx_http_process_prefer /src/harnesses/bld/src/http/ngx_http_request.c:4022:9
+    #3 0x5ded2019f9b9 in ngx_http_process_request_headers /src/harnesses/bld/src/http/ngx_http_request.c:1499:23
+    #4 0x5ded201213c9 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #5 0x5ded200a76a4 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:325:5
+    #6 0x5ded1ff5b5e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #7 0x5ded1ff46855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #8 0x5ded1ff4c2ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #9 0x5ded1ff77592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #10 0x73d948f83082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+SUMMARY: AddressSanitizer: double-free /src/harnesses/bld/src/http/ngx_http_request.c:4018:9 in ngx_http_process_prefer
+==186==ABORTING

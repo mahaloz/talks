@@ -1,0 +1,37 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index dfdcdbf..591e273 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -63,7 +63,31 @@ unsigned long long ngx_http_trace_handler(struct_0 *p)
+     struct_0 *cur;  // [bp-0x20]
+     unsigned long long v14;  // [bp-0x10]
+ 
+-    ptr = ngx_create_temp_buf(p->field_70, 200);
++    // Calculate required buffer size first
++    unsigned long long required_size = *((long long *)&p->field_398) + 1; // Initial data + newline
++    
++    // Calculate size needed for headers
++    struct_0 *size_cur = &p->field_88;
++    unsigned long size_v12 = *((long long *)&size_cur->padding_0[0]);
++    unsigned long long size_v6 = 0;
++    
++    while (true)
++    {
++        if (size_v6 >= *((long long *)&size_cur->padding_0[8]))
++        {
++            if (!*((long long *)&size_cur->padding_0[16]))
++                break;
++            size_cur = *((long long *)&size_cur->padding_0[16]);
++            size_v12 = *((long long *)&size_cur->padding_0[0]);
++            size_v6 = 0;
++    }
++        required_size += *((long long *)(size_v12 + size_v6 * 56 + 8)) + 
++                         *((long long *)(size_v12 + size_v6 * 56 + 24)) + 3; // header name + value + ":\s\n"
++        size_v6 += 1;
++    }
++    
++    // Allocate buffer with calculated size
++    ptr = ngx_create_temp_buf(p->field_70, required_size);
+     if (!ptr)
+     {
+         v14 = 500;

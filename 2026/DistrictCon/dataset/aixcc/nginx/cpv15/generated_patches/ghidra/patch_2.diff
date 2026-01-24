@@ -1,0 +1,56 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index b6d3b77..4049398 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -6,10 +6,11 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+   undefined4 *puVar1;
+   long lVar2;
+   long lVar3;
+-  undefined1 local_40 [8];
++  undefined1 *local_40;
+   undefined4 *local_38;
+   undefined8 local_30;
+   undefined8 local_28;
++  size_t decoded_len;
+   long local_20;
+   long local_18;
+   undefined4 *local_10;
+@@ -42,8 +43,21 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+           local_30 = *(undefined8 *)(puVar1 + 8);
+           local_28 = *(undefined8 *)(puVar1 + 10);
+           local_38 = puVar1;
++          
++          /* Calculate required buffer size for decoded data */
++          decoded_len = (*(ulong *)(puVar1 + 8) + 3) / 4 * 3;
++          local_40 = (undefined1 *)ngx_palloc(*(undefined8 *)(param_1 + 0x70), decoded_len);
++          
++          if (local_40 == NULL) {
++            if (3 < **(ulong **)(*(long *)(local_18 + 0x20) + 0x60)) {
++              ngx_log_error_core(4,*(undefined8 *)(*(long *)(local_18 + 0x20) + 0x60),0,
++                               "failed to allocate buffer for userid cookie");
++            }
++          }
++          else {
+           lVar3 = ngx_decode_base64(local_40,&local_30);
+           if (lVar3 == -1) {
++              ngx_pfree(*(undefined8 *)(param_1 + 0x70), local_40);
+             if (3 < **(ulong **)(*(long *)(local_18 + 0x20) + 0x60)) {
+               ngx_log_error_core(4,*(undefined8 *)(*(long *)(local_18 + 0x20) + 0x60),0,
+                                  "client sent invalid userid cookie \"%V\"",lVar2 + 0x18);
+@@ -53,6 +67,10 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+             ngx_log_error_core(8,*(undefined8 *)(*(long *)(local_18 + 0x20) + 0x60),0,
+                                "uid: %08XD%08XD%08XD%08XD",*puVar1,puVar1[1],puVar1[2],puVar1[3]);
+           }
++          
++          /* Free the allocated buffer */
++          ngx_pfree(*(undefined8 *)(param_1 + 0x70), local_40);
++          }
+         }
+       }
+     }
+@@ -60,5 +78,3 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+   return local_10;
+ }
+ 
+-
+-

@@ -1,0 +1,73 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 16442af..a0427cb 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -60,15 +60,15 @@ void ngx_black_list_insert(struct_3 **p, char *a1, unsigned long long a2)
+         }
+         if (!strcmp(a1, cur->field_0->field_8))
+         {
+-            memset(ptr->field_0->field_8, 0, *((long long *)&ptr->field_0->field_0));
+-            free(ptr->field_0->field_8);
+-            ptr->field_0->field_8 = NULL;
++            void *field_0_field_8_backup = ptr->field_0->field_8;
++            long long field_0_field_0_value = *((long long *)&ptr->field_0->field_0);
++            
++            memset(field_0_field_8_backup, 0, field_0_field_0_value);
++            free(field_0_field_8_backup);
+             memset(ptr->field_0, 0, 16);
+             free(ptr->field_0);
+-            ptr->field_0 = NULL;
+             memset(ptr, 0, 24);
+             free(ptr);
+-            ptr = 0;
+             return;
+         }
+         cur = cur->field_8;
+@@ -136,11 +136,10 @@ unsigned long long ngx_black_list_remove(struct_4 **p, char *a1)
+         memset(cur->field_0, 0, 16);
+         free(cur->field_0);
+         cur->field_0 = NULL;
+-        memset(cur, 0, 24);
+-        free(cur);
+-        cur = 0;
+-        v2 = 0;
+-        return v2;
++    memset(cur, 0, 24);
++    free(cur);
++    v2 = 0;
++    return v2;
+     }
+     cur = cur->field_8;
+     while (true)
+@@ -157,19 +156,22 @@ unsigned long long ngx_black_list_remove(struct_4 **p, char *a1)
+             break;
+         cur = cur->field_8;
+     }
+-    if (cur->field_10)
+-        cur->field_10->field_8 = cur->field_8;
+-    if (cur->field_8)
+-        cur->field_8->field_10 = cur->field_10;
+-    memset(cur->field_0->field_8, 0, *((long long *)&cur->field_0->field_0));
+-    free(cur->field_0->field_8);
+-    cur->field_0->field_8 = NULL;
++    struct struct_3 *field_10_backup = cur->field_10;
++    struct struct_3 *field_8_backup = cur->field_8;
++    void *field_0_field_8_backup = cur->field_0->field_8;
++    long long field_0_field_0_value = *((long long *)&cur->field_0->field_0);
++    
++    if (field_10_backup)
++        field_10_backup->field_8 = field_8_backup;
++    if (field_8_backup)
++        field_8_backup->field_10 = field_10_backup;
++    
++    memset(field_0_field_8_backup, 0, field_0_field_0_value);
++    free(field_0_field_8_backup);
+     memset(cur->field_0, 0, 16);
+     free(cur->field_0);
+-    cur->field_0 = NULL;
+     memset(cur, 0, 24);
+     free(cur);
+-    cur = 0;
+     v2 = 0;
+     return v2;
+ }

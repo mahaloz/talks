@@ -1,0 +1,20 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 82a170b..741d0fc 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -345,9 +345,13 @@ LAB_00149272:
+ LAB_0014947a:
+   fclose(local_20);
+   local_108 = *(long *)(*local_c0 + ngx_core_module._8_8_ * 8);
+-  if (*(long *)(local_108 + 0x10) == 0) {
++  /* 
++   * Do not free this memory as it may be used elsewhere.
++   * The memory will be properly freed when the cycle is destroyed.
++   */
++  /* if (*(long *)(local_108 + 0x10) == 0) {
+     free((void *)local_c0[0x11]);
+-  }
++  } */
+   if (ngx_test_config == 0) {
+     if ((*local_18 != 0) &&
+        ((local_110 = *(long *)(*local_18 + ngx_core_module._8_8_ * 8),

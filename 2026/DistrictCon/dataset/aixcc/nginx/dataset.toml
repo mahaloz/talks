@@ -1,0 +1,86 @@
+name = "aixcc_nginx"
+code_url = "https://github.com/aixcc-public/challenge-004-nginx-source"
+
+[targets.cpv1]
+funcs_patched = ["ngx_http_validate_from"]
+difficulty = "easy"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: heap-buffer-overflow"
+
+[targets.cpv2]
+funcs_patched = ["ngx_http_auth_basic_user"]
+difficulty = "easy"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: heap-buffer-overflow"
+
+[targets.cpv3]
+funcs_patched = ["ngx_http_trace_handler"]
+difficulty = "easy"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: heap-buffer-overflow"
+
+[targets.cpv4]
+funcs_patched = ["ngx_http_set_browser_cookie"]
+difficulty = "medium"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: heap-buffer-overflow"
+
+[targets.cpv5]
+funcs_patched = ["ngx_get_con_his", "ngx_http_get_last_ip_variable"]
+difficulty = "medium"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: SEGV"
+
+[targets.cpv8]
+funcs_patched = ["ngx_mail_pop3_user"]
+difficulty = "easy"
+harness = "mail_request_harness"
+sanitizer = "AddressSanitizer: heap-buffer-overflow"
+
+[targets.cpv9]
+funcs_patched = ["ngx_black_list_insert", "ngx_black_list_remove", "ngx_is_ip_banned"]
+difficulty = "medium"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: heap-use-after-free"
+
+[targets.cpv10]
+funcs_patched = ["ngx_http_process_prefer"]
+difficulty = "hard"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: attempting double-free"
+
+[targets.cpv11]
+funcs_patched = ["ngx_init_cycle"]
+difficulty = "hard"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: heap-use-after-free"
+
+[targets.cpv12]
+funcs_patched = ["ngx_sendfile_r"]
+difficulty = "easy"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: heap-buffer-overflow"
+
+[targets.cpv13]
+funcs_patched = ["ngx_mail_pop3_pass", "ngx_mail_pop3_logs"]
+difficulty = "medium"
+harness = "mail_request_harness"
+sanitizer = "AddressSanitizer: SEGV"
+
+[targets.cpv14]
+funcs_patched = ["ngx_http_script_regex_end_code"]
+difficulty = "hard"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: global-buffer-overflow"
+
+[targets.cpv15]
+funcs_patched = ["ngx_http_userid_get_uid"]
+difficulty = "easy"
+harness = "pov_harness"
+sanitizer = "AddressSanitizer: SEGV"
+
+[targets.cpv17]
+funcs_patched = ["ngx_mail_smtp_noop"]
+difficulty = "hard"
+harness = "smtp_harness"
+sanitizer = "AddressSanitizer: heap-use-after-free"

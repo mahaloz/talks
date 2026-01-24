@@ -1,0 +1,47 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 5063748..c256e1f 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -56,23 +56,34 @@ ngx_int_t __cdecl ngx_black_list_remove(ngx_black_list_t **black_list, u_char *r
+   ngx_black_list_t *reader; // [rsp+10h] [rbp-20h]
+ 
+   reader = *black_list;
+-  if ( !*black_list || strcmp((const char *)remove_ip, (const char *)reader->IP->data) )
++  if ( !*black_list )
++        return -1;
++    
++      if ( !strcmp((const char *)remove_ip, (const char *)reader->IP->data) )
+   {
+-    for ( reader = reader->next; ; reader = reader->next )
++    // If the node to remove is the head of the list
++    *black_list = reader->next;
++    if ( reader->next )
++      reader->next->prev = NULL;
++    }
++  else
++    {
++    for ( reader = reader->next; reader != NULL; reader = reader->next )
+     {
+-      v3 = 0;
+-      if ( reader )
+-        v3 = reader->next != 0;
+-      if ( !v3 )
+-        return -1;
+       if ( !strcmp((const char *)remove_ip, (const char *)reader->IP->data) )
+         break;
+-    }
++  }
++    
++    if ( reader == NULL )
++      return -1;
++      
+     if ( reader->prev )
+       reader->prev->next = reader->next;
+     if ( reader->next )
+       reader->next->prev = reader->prev;
+   }
++  
++  // Free memory
+   memset(reader->IP->data, 0, reader->IP->len);
+   free(reader->IP->data);
+   reader->IP->data = 0;

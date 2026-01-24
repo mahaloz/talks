@@ -1,0 +1,21 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 33ea60c..a1cb230 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -36,10 +36,12 @@ undefined8 ngx_http_set_browser_cookie(long param_1)
+           puVar1[3] = lVar3 - puVar1[4];
+         }
+         else {
+-          lVar3 = ngx_sprintf(puVar1[4],"\"%xT-%xO\":%s",*(undefined8 *)(param_1 + 0x360),
+-                              *(undefined8 *)(param_1 + 0x348),
+-                              *(undefined8 *)(*(long *)(param_1 + 0x1a0) + 0x20));
+-          puVar1[3] = lVar3 - puVar1[4];
++          lVar3 = ngx_sprintf(puVar1[4],"\"%xT-%xO\":",*(undefined8 *)(param_1 + 0x360),
++                              *(undefined8 *)(param_1 + 0x348));
++          lVar3 = ngx_cpystrn((char *)(puVar1[4]) + (lVar3 - puVar1[4]),
++                             (char *)*(undefined8 *)(*(long *)(param_1 + 0x1a0) + 0x20),
++                             0x2b - (lVar3 - puVar1[4]));
++          puVar1[3] = lVar3 + (lVar3 - puVar1[4]) - 1;
+         }
+         local_10 = 0;
+       }

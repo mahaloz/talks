@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_sendfile_r": {
+      "ged": 0
+    }
+  },
+  "ghidra": {
+    "ngx_sendfile_r": {
+      "ged": 11
+    }
+  },
+  "ida": {
+    "ngx_sendfile_r": {
+      "ged": 0
+    }
+  }
+}

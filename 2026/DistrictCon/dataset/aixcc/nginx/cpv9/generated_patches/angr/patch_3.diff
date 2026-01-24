@@ -1,0 +1,23 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 16442af..fd34404 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -157,10 +157,14 @@ unsigned long long ngx_black_list_remove(struct_4 **p, char *a1)
+             break;
+         cur = cur->field_8;
+     }
+-    if (cur->field_10)
+-        cur->field_10->field_8 = cur->field_8;
+-    if (cur->field_8)
+-        cur->field_8->field_10 = cur->field_10;
++    struct_3 *next = cur->field_8;
++    struct_3 *prev = cur->field_10;
++    
++    if (prev)
++        prev->field_8 = next;
++    if (next)
++        next->field_10 = prev;
++        
+     memset(cur->field_0->field_8, 0, *((long long *)&cur->field_0->field_0));
+     free(cur->field_0->field_8);
+     cur->field_0->field_8 = NULL;

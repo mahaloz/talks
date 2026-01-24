@@ -1,0 +1,35 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 894795c..9e82578 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -31,9 +31,14 @@ ngx_int_t __cdecl ngx_mail_pop3_pass(ngx_mail_session_t *s, ngx_connection_t *c)
+   new_auth_log = (ngx_auth_log_t *)ngx_pnalloc(c->pool, 0x18u);
+   if ( new_auth_log )
+   {
++    new_auth_log->username.data = (u_char *)ngx_pnalloc(c->pool, s->login.len);
++    if ( !new_auth_log->username.data )
++      return -1;
++    
+     for ( i = 0; i < s->login.len; ++i )
+       new_auth_log->username.data[i] = s->login.data[i];
+     new_auth_log->username.len = s->login.len;
++    new_auth_log->next = NULL;
+   }
+   if ( *auth_logs )
+     (*auth_logs)->next = new_auth_log;
+@@ -49,8 +54,14 @@ ngx_int_t __cdecl ngx_mail_pop3_logs(ngx_mail_session_t *s, ngx_connection_t *c)
+   char *data; // rax
+   char *v4; // [rsp+8h] [rbp-28h]
+ 
+-  if ( !c->auth_log )
++  if ( !c->auth_log ) {
+     c->auth_log = (ngx_auth_log_t *)ngx_pnalloc(c->pool, 0x18u);
++    if (c->auth_log) {
++      c->auth_log->username.data = NULL;
++      c->auth_log->username.len = 0;
++      c->auth_log->next = NULL;
++    }
++  }
+   s->out.data = (u_char *)ngx_pnalloc(c->pool, s->salt.len + 29);
+   if ( s->out.data )
+   {

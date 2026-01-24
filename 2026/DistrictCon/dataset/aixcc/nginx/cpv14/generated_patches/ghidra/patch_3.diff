@@ -1,0 +1,37 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 4fe71c9..76b885a 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -69,7 +69,13 @@ void ngx_http_script_regex_end_code(long *param_1)
+       }
+       ngx_http_set_exten(lVar2);
+     }
+-    *local_10 = *local_10 + 0x10;
++      /* Ensure we don't increment beyond valid bounds */
++      if (*local_10 != 0) {
++      *local_10 = *local_10 + 0x10;
++      } else {
++        *local_10 = (long)&ngx_http_script_exit_code;
++        local_10[9] = 500;
++      }
+   }
+   else {
+     local_18 = (void *)local_10[4];
+@@ -118,11 +124,16 @@ void ngx_http_script_regex_end_code(long *param_1)
+       lVar1 = *(long *)(lVar2 + 0x2b8);
+       *(long *)(lVar1 + 0x18) = local_10[3];
+       *(long *)(lVar1 + 0x20) = local_10[4];
++      /* Ensure we don't increment beyond valid bounds */
++      if (*local_10 != 0) {
+       *local_10 = *local_10 + 0x10;
++      } else {
++        *local_10 = (long)&ngx_http_script_exit_code;
++        local_10[9] = 500;
++    }
+     }
+   }
+   return;
+ }
+ 
+ 
+-

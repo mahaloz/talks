@@ -1,0 +1,70 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1052460165
+INFO: Loaded 1 modules   (29718 inline 8-bit counters): 29718 [0x59f0e53096d8, 0x59f0e5310aee), 
+INFO: Loaded 1 PC tables (29718 PCs): 29718 [0x59f0e5310af0,0x59f0e5384c50), 
+../harnesses/mail_request_harness: Running 1 inputs 1 time(s) each.
+Running: poc_input
+2026/01/19 17:30:58 [alert] 0#0: select ready != events: 3:2
+=================================================================
+==146==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x50b000000574 at pc 0x59f0e4f102d4 bp 0x7fff836aaf40 sp 0x7fff836aa700
+WRITE of size 928 at 0x50b000000574 thread T0
+    #0 0x59f0e4f102d3 in __asan_memcpy /src/llvm-project/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp:63:3
+    #1 0x59f0e51db4b1 in ngx_mail_pop3_user /src/harnesses/bld/src/mail/ngx_mail_pop3_handler.c:337:5
+    #2 0x59f0e51da9f3 in ngx_mail_pop3_auth_state /src/harnesses/bld/src/mail/ngx_mail_pop3_handler.c:183:22
+    #3 0x59f0e4fccb29 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #4 0x59f0e4f52664 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/mail_request_harness.cc:277:5
+    #5 0x59f0e4e06580 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x59f0e4df17f5 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x59f0e4df728f in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x59f0e4e22532 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x717841c9a082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+    #10 0x59f0e4de99dd in _start (/host/harnesses/mail_request_harness+0x16d9dd)
+
+0x50b000000574 is located 0 bytes after 100-byte region [0x50b000000510,0x50b000000574)
+allocated by thread T0 here:
+    #0 0x59f0e4f1234f in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x59f0e4fdae7f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x59f0e4f5c1c1 in ngx_palloc_large /src/harnesses/bld/src/core/ngx_palloc.c:220:9
+    #3 0x59f0e51db456 in ngx_mail_pop3_user /src/harnesses/bld/src/mail/ngx_mail_pop3_handler.c:332:21
+    #4 0x59f0e51da9f3 in ngx_mail_pop3_auth_state /src/harnesses/bld/src/mail/ngx_mail_pop3_handler.c:183:22
+    #5 0x59f0e4fccb29 in ngx_event_process_posted /src/harnesses/bld/src/event/ngx_event_posted.c:34:9
+    #6 0x59f0e4f52664 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/mail_request_harness.cc:277:5
+    #7 0x59f0e4e06580 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #8 0x59f0e4df17f5 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #9 0x59f0e4df728f in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #10 0x59f0e4e22532 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #11 0x717841c9a082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /src/harnesses/bld/src/mail/ngx_mail_pop3_handler.c:337:5 in ngx_mail_pop3_user
+Shadow bytes around the buggy address:
+  0x50b000000280: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
+  0x50b000000300: 00 00 00 00 00 00 00 00 00 00 00 00 00 fa fa fa
+  0x50b000000380: fa fa fa fa fa fa fd fd fd fd fd fd fd fd fd fd
+  0x50b000000400: fd fd fd fd fa fa fa fa fa fa fa fa 00 00 00 00
+  0x50b000000480: 00 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fa
+=>0x50b000000500: fa fa 00 00 00 00 00 00 00 00 00 00 00 00[04]fa
+  0x50b000000580: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x50b000000600: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x50b000000680: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x50b000000700: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x50b000000780: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==146==ABORTING

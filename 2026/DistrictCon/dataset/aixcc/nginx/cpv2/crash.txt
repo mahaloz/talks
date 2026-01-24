@@ -1,0 +1,88 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1305115016
+INFO: Loaded 1 modules   (29681 inline 8-bit counters): 29681 [0x621b33a4a238, 0x621b33a51629), 
+INFO: Loaded 1 PC tables (29681 PCs): 29681 [0x621b33a51630,0x621b33ac5540), 
+../harnesses/pov_harness: Running 1 inputs 1 time(s) each.
+Running: poc_input
+Executed poc_input in 8 ms
+***
+*** NOTE: fuzzing was not performed, you have only
+***       executed the target code on a fixed set of inputs.
+***
+
+=================================================================
+==208==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x621b336523af in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x621b3371a71f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x621b336d6ad0 in ngx_init_cycle /src/harnesses/bld/src/core/ngx_cycle.c:426:34
+    #3 0x621b33691db2 in InitializeNginx /src/harnesses/bld/src/harnesses/pov_harness.cc:203:11
+    #4 0x621b33692735 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:303:21
+    #5 0x621b335465e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x621b33531855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x621b335372ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x621b33562592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x79e72c7ee082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x621b336523af in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x621b3371a71f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x621b336d655a in ngx_init_cycle /src/harnesses/bld/src/core/ngx_cycle.c:364:35
+    #3 0x621b33691db2 in InitializeNginx /src/harnesses/bld/src/harnesses/pov_harness.cc:203:11
+    #4 0x621b33692735 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:303:21
+    #5 0x621b335465e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x621b33531855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x621b335372ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x621b33562592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x79e72c7ee082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x621b336523af in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x621b3371a71f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x621b336d6836 in ngx_init_cycle /src/harnesses/bld/src/core/ngx_cycle.c:395:35
+    #3 0x621b33691db2 in InitializeNginx /src/harnesses/bld/src/harnesses/pov_harness.cc:203:11
+    #4 0x621b33692735 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:303:21
+    #5 0x621b335465e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x621b33531855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x621b335372ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x621b33562592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x79e72c7ee082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+    #0 0x621b336523af in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x621b3371a71f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x621b336d6c1a in ngx_init_cycle /src/harnesses/bld/src/core/ngx_cycle.c:441:56
+    #3 0x621b33691db2 in InitializeNginx /src/harnesses/bld/src/harnesses/pov_harness.cc:203:11
+    #4 0x621b33692735 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:303:21
+    #5 0x621b335465e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x621b33531855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x621b335372ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x621b33562592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x79e72c7ee082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+    #0 0x621b336523af in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x621b3371a71f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x621b336d697d in ngx_init_cycle /src/harnesses/bld/src/core/ngx_cycle.c:411:57
+    #3 0x621b33691db2 in InitializeNginx /src/harnesses/bld/src/harnesses/pov_harness.cc:203:11
+    #4 0x621b33692735 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:303:21
+    #5 0x621b335465e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x621b33531855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x621b335372ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x621b33562592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x79e72c7ee082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+    #0 0x621b336523af in malloc /src/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:68:3
+    #1 0x621b3371a71f in ngx_alloc /src/harnesses/bld/src/os/unix/ngx_alloc.c:22:9
+    #2 0x621b336d66dd in ngx_init_cycle /src/harnesses/bld/src/core/ngx_cycle.c:380:57
+    #3 0x621b33691db2 in InitializeNginx /src/harnesses/bld/src/harnesses/pov_harness.cc:203:11
+    #4 0x621b33692735 in LLVMFuzzerTestOneInput /src/harnesses/bld/src/harnesses/pov_harness.cc:303:21
+    #5 0x621b335465e0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerLoop.cpp:614:13
+    #6 0x621b33531855 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:327:6
+    #7 0x621b335372ef in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerDriver.cpp:862:9
+    #8 0x621b33562592 in main /src/llvm-project/compiler-rt/lib/fuzzer/FuzzerMain.cpp:20:10
+    #9 0x79e72c7ee082 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24082) (BuildId: 0702430aef5fa3dda43986563e9ffcc47efbd75e)
+
+SUMMARY: AddressSanitizer: 240 byte(s) leaked in 6 allocation(s).

@@ -1,0 +1,73 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 0215857..92920da 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -20,29 +20,47 @@ ngx_int_t __cdecl ngx_http_trace_handler(ngx_http_request_t *r)
+   ngx_http_request_t *ra; // [rsp+70h] [rbp-10h]
+ 
+   ra = r;
+-  b = ngx_create_temp_buf(r->pool, 0xC8u);
+-  if ( !b )
++  // Calculate required buffer size first
++  content_len = ra->request_line.len + 1; // Request line + newline
++  
++  // Calculate size needed for headers
++  part = &ra->headers_in.headers.part;
++  header = (ngx_table_elt_t *)ra->headers_in.headers.part.elts;
++  for (i = 0; ; ++i) {
++    if (i < part->nelts) {
++      content_len += header[i].key.len + header[i].value.len + 3; // key + ": " + value + newline
++    }
++    
++    if (i >= part->nelts) {
++      if (!part->next)
++        break;
++      part = part->next;
++      header = (ngx_table_elt_t *)part->elts;
++      i = 0;
++      content_len += header[i].key.len + header[i].value.len + 3;
++    }
++  }
++  
++  // Allocate buffer of calculated size
++  b = ngx_create_temp_buf(r->pool, content_len);
++  if (!b)
+     return 500;
++    
++  // Reset part and header for the actual copying
++  part = &ra->headers_in.headers.part;
++  header = (ngx_table_elt_t *)ra->headers_in.headers.part.elts;
++  
++  // Copy request line
+   last = b->last;
+   memcpy(last, ra->request_line.data, ra->request_line.len);
+   b->last = &last[ra->request_line.len];
+   v1 = b->last;
+   b->last = v1 + 1;
+   *v1 = 10;
+-  content_len = ra->request_line.len + 1;
+-  part = &ra->headers_in.headers.part;
+-  header = (ngx_table_elt_t *)ra->headers_in.headers.part.elts;
+-  for ( i = 0; ; ++i )
+-  {
+-    if ( i < part->nelts )
+-      goto LABEL_8;
+-    if ( !part->next )
+-      break;
+-    part = part->next;
+-    header = (ngx_table_elt_t *)part->elts;
+-    i = 0;
+-LABEL_8:
+-    content_len += header[i].value.len + header[i].key.len + 3;
++  // We've already calculated content_len, now copy the headers
++  for (i = 0; ; ++i) {
++    if (i < part->nelts) {
++      // Copy header data
+     v8 = b->last;
+     memcpy(v8, header[i].key.data, header[i].key.len);
+     b->last = &v8[header[i].key.len];
+@@ -75,4 +93,3 @@ LABEL_8:
+   return -4;
+ }
+ 
+-

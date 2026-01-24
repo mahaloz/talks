@@ -1,0 +1,26 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index b9e3cbb..6031326 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -174,7 +174,8 @@ struct_7 * ngx_http_script_regex_end_code(struct_7 *ptr, unsigned long a1, unsig
+             idx4 = ptr;
+             addr->field_18 = idx4->field_18;
+             addr->field_20 = idx4->field_20;
+-            ptr->field_0 = &ptr->field_0[1].padding_0[7];
++            // Use a safe way to advance to the next code segment
++            ptr->field_0 = &ngx_http_script_exit_code;
+             return ptr;
+         }
+         ptr->field_0 = &ngx_http_script_exit_code.padding_0[0];
+@@ -232,9 +233,9 @@ struct_7 * ngx_http_script_regex_end_code(struct_7 *ptr, unsigned long a1, unsig
+             }
+             ngx_http_set_exten(p);
+         }
+-        ptr->field_0 = &ptr->field_0[1].padding_0[7];
++        // Use a safe way to advance to the next code segment
++        ptr->field_0 = &ngx_http_script_exit_code;
+         return ptr;
+     }
+ }
+ 
+-

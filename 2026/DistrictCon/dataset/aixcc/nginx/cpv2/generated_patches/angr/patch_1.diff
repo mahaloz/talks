@@ -1,0 +1,20 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index f0e6474..d089dc7 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -88,6 +88,7 @@ unsigned long long ngx_http_auth_basic_user(struct_3 *ptr)
+         {
+             ptr->field_1b0 = &g_571ac9.padding_0[0];
+             v6 = -5;
++            ngx_pfree(ptr->field_70, v5);
+             return v6;
+         }
+         else
+@@ -105,6 +106,7 @@ unsigned long long ngx_http_auth_basic_user(struct_3 *ptr)
+             }
+             ptr->field_1b0 = &g_571ac9.padding_0[0];
+             v6 = -5;
++            ngx_pfree(ptr->field_70, v5);
+             return v6;
+         }
+     }

@@ -1,0 +1,38 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index d90f7f4..0c0aed6 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -13,14 +13,20 @@ undefined8 ngx_mail_pop3_pass(long param_1,long param_2)
+   local_30 = (long *)(param_2 + 0x58);
+   if (*(long *)(param_1 + 0x128) == 1) {
+     puVar2 = *(undefined8 **)(param_1 + 0x120);
++    if (puVar2 == (undefined8 *)0x0) {
++      local_10 = 0xffffffffffffffff;
++    }
++    else {
+     *(undefined8 *)(param_1 + 0x70) = *puVar2;
+     uVar1 = ngx_pnalloc(*(undefined8 *)(param_2 + 0x68),*(undefined8 *)(param_1 + 0x70));
+     *(undefined8 *)(param_1 + 0x78) = uVar1;
+     if (*(long *)(param_1 + 0x78) == 0) {
+-      local_10 = 0xffffffffffffffff;
+-    }
+-    else {
++        local_10 = 0xffffffffffffffff;
++      }
++      else {
++        if (puVar2[1] != 0) {
+       memcpy(*(void **)(param_1 + 0x78),(void *)puVar2[1],*(size_t *)(param_1 + 0x70));
++        }
+       if (*local_30 == 0) {
+         local_10 = 0xfffffffffffffffc;
+       }
+@@ -86,7 +92,9 @@ undefined8 ngx_mail_pop3_logs(long param_1,long param_2)
+     *(undefined8 *)(pcVar1 + 0x10) = pop3_logging._16_8_;
+     *(undefined4 *)(pcVar1 + 0x18) = pop3_logging._24_4_;
+     pcVar1[0x1c] = pop3_logging[0x1c];
++    if (*(void **)(param_1 + 0x88) != NULL) {
+     memcpy(pcVar1 + 0x1d,*(void **)(param_1 + 0x88),*(size_t *)(param_1 + 0x80));
++    }
+     *(char **)(param_1 + 0x10) =
+          pcVar1 + 0x1d + (*(long *)(param_1 + 0x80) - *(long *)(param_1 + 0x18));
+     local_10 = 0;

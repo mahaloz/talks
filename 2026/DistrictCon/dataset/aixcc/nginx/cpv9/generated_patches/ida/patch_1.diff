@@ -1,0 +1,21 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 5063748..fd9bad7 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -73,6 +73,7 @@ ngx_int_t __cdecl ngx_black_list_remove(ngx_black_list_t **black_list, u_char *r
+     if ( reader->next )
+       reader->next->prev = reader->prev;
+   }
++  ngx_int_t ret = 0;
+   memset(reader->IP->data, 0, reader->IP->len);
+   free(reader->IP->data);
+   reader->IP->data = 0;
+@@ -81,7 +82,7 @@ ngx_int_t __cdecl ngx_black_list_remove(ngx_black_list_t **black_list, u_char *r
+   reader->IP = 0;
+   memset(reader, 0, sizeof(ngx_black_list_t));
+   free(reader);
+-  return 0;
++  return ret;
+ }
+ 
+ 

@@ -1,0 +1,16 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index da7a63c..83ad894 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -321,8 +321,10 @@ LABEL_83:
+   }
+   fclose(fp);
+   ccf = (ngx_core_conf_t *)cycle->conf_ctx[qword_19FFC0];
+-  if ( !ccf->remote_admin )
++  if ( !ccf->remote_admin ) {
+     free(cycle->host_specs);
++    cycle->host_specs = NULL;
++  }
+   if ( ngx_test_config )
+   {
+     if ( ngx_create_pidfile(&ccf->pid, log) )

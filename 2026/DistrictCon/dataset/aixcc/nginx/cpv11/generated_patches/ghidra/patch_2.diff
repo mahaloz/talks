@@ -1,0 +1,31 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 82a170b..9596032 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -266,7 +266,9 @@ long * ngx_init_cycle(long *param_1)
+   lVar3 = ngx_alloc(0x18,local_48);
+   local_c0[0x11] = lVar3;
+   if (local_c0[0x11] == 0) {
+-    ngx_destroy_pool(local_b8);
++    // Don't destroy the pool if it contains memory still in use
++    // Instead, mark it as failed but keep the memory allocated
++    local_c0[0] = 0;  // Mark as failed
+     return (long *)0x0;
+   }
+   uVar6 = ngx_alloc(0x10);
+@@ -297,7 +299,9 @@ LAB_00149064:
+   uVar6 = ngx_alloc(0x10);
+   *(undefined8 *)(local_c0[0x11] + 8) = uVar6;
+   if (*(long *)(local_c0[0x11] + 8) == 0) {
+-    ngx_destroy_pool(local_b8);
++    // Don't destroy the pool if it contains memory still in use
++    // Instead, mark it as failed but keep the memory allocated
++    local_c0[0] = 0;  // Mark as failed
+     return (long *)0x0;
+   }
+   *(char **)(*(long *)(local_c0[0x11] + 8) + 8) = "Unknown RAM\n";
+@@ -768,4 +772,3 @@ code_r0x001497f0:
+ }
+ 
+ 
+-

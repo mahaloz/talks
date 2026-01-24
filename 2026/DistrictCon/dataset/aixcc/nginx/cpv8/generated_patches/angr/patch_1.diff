@@ -1,0 +1,26 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 2e21404..308f005 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -38,14 +38,19 @@ unsigned long long ngx_mail_pop3_user(struct_1 *ptr, struct_2 *a1)
+         return v1;
+     }
+     v0 = ptr->field_120;
+-    *((unsigned long long *)&ptr->field_60) = v0->field_0;
++    unsigned long long size = v0->field_0;
++    if (size > 100) {
++        size = 100;  // Limit size to buffer capacity
++    }
++    *((unsigned long long *)&ptr->field_60) = size;
++    
+     ptr->field_68 = ngx_pnalloc(a1->field_68, 100);
+     if (!ptr->field_68)
+     {
+         v1 = -1;
+         return v1;
+     }
+-    memcpy(ptr->field_68, v0->field_8, *((long long *)&ptr->field_60));
++    memcpy(ptr->field_68, v0->field_8, size);
+     if (((unsigned short)a1->field_60->field_0 & 0x200))
+         ngx_log_error_core(8, a1->field_60, 0, "pop3 login: \"%V\"", &ptr->field_60, v3);
+     ptr->field_50 = 1;

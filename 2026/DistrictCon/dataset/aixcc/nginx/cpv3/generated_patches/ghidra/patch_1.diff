@@ -1,0 +1,60 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index a5951cf..7647d20 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -16,7 +16,35 @@ long ngx_http_trace_handler(long param_1)
+   long local_18;
+   
+   local_18 = param_1;
+-  local_40[2] = ngx_create_temp_buf(*(undefined8 *)(param_1 + 0x70),200);
++  // Calculate the total size needed for the buffer
++  local_50 = *(long *)(local_18 + 0x398) + 1; // Request data + newline
++  local_20 = (long *)(local_18 + 0x88);
++  local_28 = *local_20;
++  local_58 = 0;
++  
++  // Calculate size needed for all headers
++  while (1) {
++    if ((ulong)local_20[1] <= local_58) {
++      if (local_20[2] == 0) {
++        break;
++      }
++      local_20 = (long *)local_20[2];
++      local_28 = *local_20;
++      local_58 = 0;
++    }
++    local_50 = *(long *)(local_28 + local_58 * 0x38 + 8) +
++               *(long *)(local_28 + local_58 * 0x38 + 0x18) + 3 + local_50;
++    local_58 = local_58 + 1;
++  }
++  
++  // Allocate buffer with calculated size
++  local_40[2] = ngx_create_temp_buf(*(undefined8 *)(param_1 + 0x70), local_50);
++  
++  // Reset for actual processing
++  local_50 = *(long *)(local_18 + 0x398) + 1;
++  local_20 = (long *)(local_18 + 0x88);
++  local_28 = *local_20;
++  local_58 = 0;
+   if (local_40[2] == 0) {
+     return 500;
+   }
+@@ -30,7 +58,7 @@ long ngx_http_trace_handler(long param_1)
+   local_20 = (long *)(local_18 + 0x88);
+   local_28 = *local_20;
+   local_58 = 0;
+-  do {
++  while (1) {
+     if ((ulong)local_20[1] <= local_58) {
+       if (local_20[2] == 0) {
+         *(ushort *)(local_40[2] + 0x50) = *(ushort *)(local_40[2] + 0x50) & 0xff7f | 0x80;
+@@ -80,8 +108,6 @@ long ngx_http_trace_handler(long param_1)
+     *(undefined1 **)(local_40[2] + 8) = puVar2 + 1;
+     *puVar2 = 10;
+     local_58 = local_58 + 1;
+-  } while( true );
++  }
+ }
+ 
+-
+-

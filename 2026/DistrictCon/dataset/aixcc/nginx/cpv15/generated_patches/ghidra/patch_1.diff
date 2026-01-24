@@ -1,0 +1,51 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index b6d3b77..a04aaaf 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -6,10 +6,10 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+   undefined4 *puVar1;
+   long lVar2;
+   long lVar3;
+-  undefined1 local_40 [8];
+   undefined4 *local_38;
+   undefined8 local_30;
+   undefined8 local_28;
++  undefined1 *decoded_buffer;
+   long local_20;
+   long local_18;
+   undefined4 *local_10;
+@@ -42,7 +42,19 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+           local_30 = *(undefined8 *)(puVar1 + 8);
+           local_28 = *(undefined8 *)(puVar1 + 10);
+           local_38 = puVar1;
+-          lVar3 = ngx_decode_base64(local_40,&local_30);
++          
++          // Calculate required buffer size (base64 decoding output is at most 3/4 of input size)
++          size_t decoded_size = (*(ulong *)(puVar1 + 8) * 3) / 4 + 1;
++          decoded_buffer = ngx_pcalloc(*(undefined8 *)(param_1 + 0x70), decoded_size);
++          
++          if (decoded_buffer == NULL) {
++            if (3 < **(ulong **)(*(long *)(local_18 + 0x20) + 0x60)) {
++              ngx_log_error_core(4,*(undefined8 *)(*(long *)(local_18 + 0x20) + 0x60),0,
++                               "failed to allocate buffer for userid cookie");
++            }
++          }
++          else {
++            lVar3 = ngx_decode_base64(decoded_buffer,&local_30);
+           if (lVar3 == -1) {
+             if (3 < **(ulong **)(*(long *)(local_18 + 0x20) + 0x60)) {
+               ngx_log_error_core(4,*(undefined8 *)(*(long *)(local_18 + 0x20) + 0x60),0,
+@@ -53,6 +65,7 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+             ngx_log_error_core(8,*(undefined8 *)(*(long *)(local_18 + 0x20) + 0x60),0,
+                                "uid: %08XD%08XD%08XD%08XD",*puVar1,puVar1[1],puVar1[2],puVar1[3]);
+           }
++          }
+         }
+       }
+     }
+@@ -60,5 +73,3 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+   return local_10;
+ }
+ 
+-
+-

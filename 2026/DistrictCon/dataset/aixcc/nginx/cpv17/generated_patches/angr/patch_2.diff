@@ -1,0 +1,12 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index ca9dcc9..95fdee0 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -13,7 +13,6 @@ unsigned long long ngx_mail_smtp_noop(unsigned long long *ptr, unsigned long lon
+     }
+     ptr[2] = 28;
+     ptr[3] = "501 5.5.4 Invalid argument\r\n";
+-    ngx_mail_close_connection(a1, a1, a2, "501 5.5.4 Invalid argument\r\n", a4, a5);
+     v0 = -1;
+     return v0;
+ }

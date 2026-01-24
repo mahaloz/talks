@@ -1,0 +1,26 @@
+{
+  "angr": {
+    "ngx_get_con_his": {
+      "ged": 5
+    },
+    "ngx_http_get_last_ip_variable": {
+      "ged": 0
+    }
+  },
+  "ghidra": {
+    "ngx_get_con_his": {
+      "ged": 6
+    },
+    "ngx_http_get_last_ip_variable": {
+      "ged": 0
+    }
+  },
+  "ida": {
+    "ngx_get_con_his": {
+      "ged": 8
+    },
+    "ngx_http_get_last_ip_variable": {
+      "ged": 0
+    }
+  }
+}

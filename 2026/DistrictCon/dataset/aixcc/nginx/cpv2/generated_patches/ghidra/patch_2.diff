@@ -1,0 +1,20 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index f260b33..a79e61e 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -60,6 +60,7 @@ undefined8 ngx_http_auth_basic_user(long param_1)
+             if ((local_40 == 0) || (local_40 == local_28)) {
+               *(char **)(local_18 + 0x1b0) = "";
+               local_10 = 0xfffffffffffffffb;
++              ngx_pfree(*(undefined8 *)(local_18 + 0x70), local_20);
+             }
+             else {
+               *(ulong *)(local_18 + 0x1a8) = local_40;
+@@ -72,6 +73,7 @@ undefined8 ngx_http_auth_basic_user(long param_1)
+           else {
+             *(char **)(local_18 + 0x1b0) = "";
+             local_10 = 0xfffffffffffffffb;
++            ngx_pfree(*(undefined8 *)(local_18 + 0x70), local_20);
+           }
+         }
+       }

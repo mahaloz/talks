@@ -1,0 +1,50 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 54d52f6..82a5384 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -21,18 +21,21 @@ unsigned long long ngx_http_validate_from(struct_0 *ptr, unsigned long long a1,
+ 
+     v4 = ptr->field_8;
+     v0 = 0;
++    void* buffer_start;  // Track the start of the buffer
+     if (a2)
+     {
+-        cur = ngx_palloc(a1, ptr->field_0);
+-        if (!cur)
++        buffer_start = ngx_palloc(a1, ptr->field_0);
++        if (!buffer_start)
+         {
+             v5 = -1;
+             return v5;
+         }
++        cur = buffer_start;
+     }
+     else
+     {
+         cur = ptr->field_8;
++        buffer_start = cur;
+     }
+     v1 = 0;
+ LABEL_4a3b47:
+@@ -108,8 +111,20 @@ LABEL_4a3cd6:
+                     break;
+                 case 46:
+                     v0 = 2;
+-                    for (cur -= 2; *((char *)cur) != 46; cur -= 1);
++                    // Safely backtrack to find previous dot with bounds checking
++                    if (cur > buffer_start + 1) {
++                        cur -= 2;
++                        while (cur >= buffer_start && *((char *)cur) != 46) {
++                            cur -= 1;
++                        }
++                        // If we found a dot or reached the start, position correctly
++                        if (cur >= buffer_start) {
+                     cur += 1;
++                        } else {
++                            // No dot found, reset to a safe position
++                            cur = buffer_start;
++                        }
++                    }
+ LABEL_4a3cd6:
+ LABEL_4a3e47:
+                     break;

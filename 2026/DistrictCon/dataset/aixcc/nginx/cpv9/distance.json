@@ -1,0 +1,35 @@
+{
+  "angr": {
+    "ngx_black_list_insert": {
+      "ged": 5
+    },
+    "ngx_black_list_remove": {
+      "ged": 24
+    },
+    "ngx_is_ip_banned": {
+      "ged": 0
+    }
+  },
+  "ghidra": {
+    "ngx_black_list_insert": {
+      "ged": 10
+    },
+    "ngx_black_list_remove": {
+      "ged": 24
+    },
+    "ngx_is_ip_banned": {
+      "ged": 8
+    }
+  },
+  "ida": {
+    "ngx_black_list_insert": {
+      "ged": 6
+    },
+    "ngx_black_list_remove": {
+      "ged": 20
+    },
+    "ngx_is_ip_banned": {
+      "ged": 3
+    }
+  }
+}

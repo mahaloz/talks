@@ -1,0 +1,28 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 7ba2261..7ec6c38 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -22,16 +22,18 @@ ssize_t __cdecl ngx_sendfile_r(ngx_connection_t *c, ngx_buf_t *file, size_t size
+   if ( read(filea->file->fd, buf, sb.st_size) == -1 )
+     return -1;
+   lseek64(filea->file->fd, 0, 0);
+-  rev = (u_char *)ngx_alloc(0x64u, ca->log);
+-  if ( !rev )
++  rev = (u_char *)ngx_alloc(sizea, ca->log);
++  if ( !rev ) {
++  ngx_pfree(ca->pool, buf);
+     return -1;
++  }
+   i = sizea + LODWORD(filea->file_pos) - 1;
+   j = 0;
+-  while ( i >= filea->file_pos )
++  while ( i >= filea->file_pos && j < sizea )
+     rev[j++] = buf[i--];
+-  n = ca->send(ca, rev, sizea);
++  n = ca->send(ca, rev, j);
+   ngx_pfree(ca->pool, buf);
+-  free(rev);
++  ngx_free(rev);
+   return n;
+ }
+ 

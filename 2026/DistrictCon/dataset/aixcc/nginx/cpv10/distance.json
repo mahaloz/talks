@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_http_process_prefer": {
+      "ged": 8
+    }
+  },
+  "ghidra": {
+    "ngx_http_process_prefer": {
+      "ged": 15
+    }
+  },
+  "ida": {
+    "ngx_http_process_prefer": {
+      "ged": 8
+    }
+  }
+}

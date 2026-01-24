@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_http_set_browser_cookie": {
+      "ged": 0
+    }
+  },
+  "ghidra": {
+    "ngx_http_set_browser_cookie": {
+      "ged": 9
+    }
+  },
+  "ida": {
+    "ngx_http_set_browser_cookie": {
+      "ged": 0
+    }
+  }
+}

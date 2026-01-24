@@ -1,0 +1,44 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 64d44bf..b521cd2 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -58,7 +58,12 @@ void* ngx_http_userid_get_uid(struct_2 *index, unsigned long long a1)
+     }
+     if (((unsigned short)index->field_20->field_60->field_0 & 0x100))
+         ngx_log_error_core(8, index->field_20->field_60, 0, "uid cookie: \"%V\"", p + 32, v10);
+-    if ((long long)p[32] < 22)
++    // Properly access the memory as byte offsets or struct fields
++    // Assuming p points to a structure with length at offset 32 and data at offset 40
++    unsigned char *p_bytes = (unsigned char *)p;
++    unsigned long long length = *((unsigned long long *)(p_bytes + 32));
++    
++    if (length < 22)
+     {
+         if (index->field_20->field_60->field_0 >= 4)
+             ngx_log_error_core(4, index->field_20->field_60, 0, "client sent too short userid cookie \"%V\"", v3 + 24, v10);
+@@ -67,9 +72,8 @@ void* ngx_http_userid_get_uid(struct_2 *index, unsigned long long a1)
+     }
+     else
+     {
+-        ptr = p;
+-        v6 = (long long)ptr[32];
+-        v7 = (long long)ptr[40];
++        v6 = *((unsigned long long *)(p_bytes + 32));  // length
++        v7 = *((unsigned long long *)(p_bytes + 40));  // data pointer
+         v5 = p;
+         if (ngx_decode_base64(&v4, &v6) == -1)
+         {
+@@ -82,9 +86,10 @@ void* ngx_http_userid_get_uid(struct_2 *index, unsigned long long a1)
+         {
+             if (((unsigned short)index->field_20->field_60->field_0 & 0x100))
+             {
+-                v0 = (int)p[8];
+-                v1 = (int)p[12];
+-                ngx_log_error_core(8, index->field_20->field_60, 0, "uid: %08XD%08XD%08XD%08XD", *((int *)p), (int)p[4]);
++                unsigned char *p_bytes = (unsigned char *)p;
++                v0 = *((int *)(p_bytes + 8));
++                v1 = *((int *)(p_bytes + 12));
++                ngx_log_error_core(8, index->field_20->field_60, 0, "uid: %08XD%08XD%08XD%08XD", *((int *)p), *((int *)(p_bytes + 4)));
+             }
+             v8 = p;
+             return v8;

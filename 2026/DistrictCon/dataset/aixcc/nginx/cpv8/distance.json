@@ -1,0 +1,17 @@
+{
+  "angr": {
+    "ngx_mail_pop3_user": {
+      "ged": 8
+    }
+  },
+  "ghidra": {
+    "ngx_mail_pop3_user": {
+      "ged": 15
+    }
+  },
+  "ida": {
+    "ngx_mail_pop3_user": {
+      "ged": 8
+    }
+  }
+}

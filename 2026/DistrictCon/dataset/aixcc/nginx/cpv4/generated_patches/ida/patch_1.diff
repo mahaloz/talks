@@ -1,0 +1,51 @@
+diff --git a/dec_ida.c b/dec_ida.c
+index 0be6c7e..4ceda69 100644
+--- a/dec_ida.c
++++ b/dec_ida.c
+@@ -16,24 +16,38 @@ ngx_int_t __cdecl ngx_http_set_browser_cookie(ngx_http_request_t *r)
+   browser_cookie->next = 0;
+   browser_cookie->key.len = 14;
+   browser_cookie->key.data = (u_char *)"Browser-Cookie";
+-  browser_cookie->value.data = (u_char *)ngx_pnalloc(r->pool, 0x2Bu);
++  size_t buffer_size;
++  
++  if ( ((*((_WORD *)&r->headers_in + 196) >> 10) & 1) != 0 && r->headers_in.cookie ) {
++    /* Calculate required buffer size: base format + cookie length + null terminator */
++    buffer_size = sizeof("\"XXXXXXXX-XXXXXXXX\":") + r->headers_in.cookie->value.len;
++  } else {
++    /* Just need space for the timestamp and content length format */
++    buffer_size = sizeof("\"XXXXXXXX-XXXXXXXX\"");
++  }
++  
++  browser_cookie->value.data = (u_char *)ngx_pnalloc(r->pool, buffer_size);
+   if ( browser_cookie->value.data )
+   {
+-    if ( ((*((_WORD *)&r->headers_in + 196) >> 10) & 1) != 0 && r->headers_in.cookie )
+-      browser_cookie->value.len = ngx_sprintf(
++    if ( ((*((_WORD *)&r->headers_in + 196) >> 10) & 1) != 0 && r->headers_in.cookie ) {
++      /* Format the base part first */
++      u_char *p = ngx_sprintf(
+                                     browser_cookie->value.data,
+-                                    "\"%xT-%xO\":%s",
++                    "\"%xT-%xO\":",
+                                     r->headers_out.last_modified_time,
+-                                    r->headers_out.content_length_n,
+-                                    (const char *)r->headers_in.cookie->value.data)
+-                                - browser_cookie->value.data;
+-    else
++                    r->headers_out.content_length_n);
++                    
++      /* Copy cookie data with bounds checking */
++      ngx_memcpy(p, r->headers_in.cookie->value.data, r->headers_in.cookie->value.len);
++      browser_cookie->value.len = (p - browser_cookie->value.data) + r->headers_in.cookie->value.len;
++    } else {
+       browser_cookie->value.len = ngx_sprintf(
+                                     browser_cookie->value.data,
+                                     "\"%xT-%xO\"",
+                                     r->headers_out.last_modified_time,
+                                     r->headers_out.content_length_n)
+                                 - browser_cookie->value.data;
++    }
+     return 0;
+   }
+   else

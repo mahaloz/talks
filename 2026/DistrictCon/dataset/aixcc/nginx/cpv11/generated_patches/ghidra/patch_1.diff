@@ -1,0 +1,12 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index 82a170b..0914991 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -347,6 +347,7 @@ LAB_0014947a:
+   local_108 = *(long *)(*local_c0 + ngx_core_module._8_8_ * 8);
+   if (*(long *)(local_108 + 0x10) == 0) {
+     free((void *)local_c0[0x11]);
++    local_c0[0x11] = 0; /* Set to NULL after freeing to prevent use-after-free */
+   }
+   if (ngx_test_config == 0) {
+     if ((*local_18 != 0) &&

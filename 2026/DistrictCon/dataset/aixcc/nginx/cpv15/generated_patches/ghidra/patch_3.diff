@@ -1,0 +1,13 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index b6d3b77..221a6f3 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -6,7 +6,7 @@ undefined4 * ngx_http_userid_get_uid(long param_1,long param_2)
+   undefined4 *puVar1;
+   long lVar2;
+   long lVar3;
+-  undefined1 local_40 [8];
++  undefined1 local_40 [32];
+   undefined4 *local_38;
+   undefined8 local_30;
+   undefined8 local_28;

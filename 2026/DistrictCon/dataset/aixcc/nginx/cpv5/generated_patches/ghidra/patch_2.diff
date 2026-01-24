@@ -1,0 +1,28 @@
+diff --git a/dec_ghidra.c b/dec_ghidra.c
+index de32141..35cc451 100644
+--- a/dec_ghidra.c
++++ b/dec_ghidra.c
+@@ -10,9 +10,12 @@ long ngx_get_con_his(long param_1,ulong param_2)
+   local_30 = 0;
+   local_10 = param_1;
+   if (((param_1 != 0) && (param_2 != 1)) && (local_28 = param_1, param_2 != 0)) {
+-    for (; local_30 <= param_2; local_30 = local_30 + 1) {
++    for (; local_30 < param_2; local_30 = local_30 + 1) {
+       local_28 = *(long *)(local_28 + 0x10);
++      if (local_28 == 0) {
++        break;
+     }
++  }
+     local_10 = local_28;
+   }
+   return local_10;
+@@ -29,6 +32,9 @@ undefined8 ngx_http_get_last_ip_variable(long param_1,uint *param_2)
+   
+   puVar1 = (undefined8 *)
+            ngx_get_con_his(*(undefined8 *)(param_1 + 0x10),*(undefined8 *)(param_1 + 8));
++  if (puVar1 == (undefined8 *)0) {
++    return 0;
++  }
+   *(undefined8 *)(param_2 + 2) = puVar1[1];
+   *param_2 = *param_2 & 0xf0000000 | (uint)*puVar1 & 0xfffffff;
+   return 0;

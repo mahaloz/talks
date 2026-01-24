@@ -1,0 +1,24 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 7f96402..bb5ccdb 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -77,11 +77,18 @@ unsigned long long ngx_mail_pop3_pass(struct_3 *ptr, struct_1 *a1)
+     p = ngx_pnalloc(a1->field_68, 24);
+     if (p)
+     {
++        p->field_0 = ptr->field_60;
++        p->field_8 = 0;
++        
++        if (ptr->field_60 > 0) {
++            p->field_8 = ngx_pnalloc(a1->field_68, ptr->field_60);
++            if (p->field_8) {
+         for (i = 0; i < ptr->field_60; i += 1)
+         {
+             *((char *)(p->field_8 + i)) = *((char *)(ptr->field_68 + i));
+         }
+-        p->field_0 = ptr->field_60;
++    }
++        }
+     }
+     if (*((long long *)&cur->padding_0[0]))
+         *((struct_4 **)(*((long long *)&cur->padding_0[0]) + 16)) = p;

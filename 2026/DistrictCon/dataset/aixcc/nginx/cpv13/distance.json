@@ -1,0 +1,26 @@
+{
+  "angr": {
+    "ngx_mail_pop3_pass": {
+      "ged": 5
+    },
+    "ngx_mail_pop3_logs": {
+      "ged": 0
+    }
+  },
+  "ghidra": {
+    "ngx_mail_pop3_pass": {
+      "ged": 14
+    },
+    "ngx_mail_pop3_logs": {
+      "ged": 5
+    }
+  },
+  "ida": {
+    "ngx_mail_pop3_pass": {
+      "ged": 4
+    },
+    "ngx_mail_pop3_logs": {
+      "ged": 0
+    }
+  }
+}

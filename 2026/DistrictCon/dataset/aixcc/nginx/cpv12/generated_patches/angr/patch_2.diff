@@ -1,0 +1,57 @@
+diff --git a/dec_angr.c b/dec_angr.c
+index 1a15795..504d75b 100644
+--- a/dec_angr.c
++++ b/dec_angr.c
+@@ -49,27 +49,38 @@ unsigned long long ngx_sendfile_r(struct_2 *a0, struct_0 *ptr, unsigned long lon
+     }
+     else if (read(ptr->field_40->field_0, v4, v6) == -1)
+     {
++        ngx_pfree(a0->field_68, v4, a2, 0, 0, 0);
+         v7 = -1;
+         return v7;
+     }
+     else
+     {
+         lseek64(ptr->field_40->field_0, 0, 0);
+-        v3 = ngx_alloc(100, a0->field_60);
+-        if (!v3)
+-        {
+-            v7 = -1;
+-            return v7;
+-        }
+-        v1 = ptr->field_10 + a2 - 1;
+-        for (i = 0; v1 >= ptr->field_10; i += 1)
+-        {
+-            v3[i] = v4[v1];
+-            v1 -= 1;
+-        }
++    // Calculate the size needed for v3 buffer
++    unsigned long long v3_size = a2;
++    if (v3_size == 0) {
++        ngx_pfree(a0->field_68, v4, a2, 0, 0, 0);
++        v7 = 0;
++        return v7;
++    }
++    
++    v3 = ngx_alloc(v3_size, a0->field_60);
++    if (!v3)
++    {
++        ngx_pfree(a0->field_68, v4, a2, 0, 0, 0);
++        v7 = -1;
++        return v7;
++    }
++    
++    v1 = ptr->field_10 + a2 - 1;
++    for (i = 0; i < v3_size && v1 >= ptr->field_10; i += 1)
++    {
++        v3[i] = v4[v1];
++        v1 -= 1;
++    }
+         v2 = a0->field_30(a0, v3, a2);
+-        ngx_pfree(a0->field_68, v4, a2, v9, v10, v11);
+-        free(v3);
++        ngx_pfree(a0->field_68, v4, a2, 0, 0, 0);
++        ngx_free(v3);
+         v7 = v2;
+         return v7;
+     }
