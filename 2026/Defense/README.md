@@ -1,7 +1,7 @@
 ## Toward a Science of Reverse Engineering
-- Conference: None (ASU Defense)
-- [**Slides Link**](https://docs.google.com/presentation/d/1Hi3R1meVWhT3Zi0fnk3gIE45vs1KJuioYVzCPexqLTY/edit?usp=sharing)
-- [Video Link]()
+- Conference: None (Arizona State University, Defense)
+- [Slides Link](https://docs.google.com/presentation/d/1e9ekcw35G1C47EaUYuemcCssgk_QNzf6Fv3JepUbdSE/edit?usp=sharing) 
+- [Video Link](https://youtu.be/lqOyeOFA6J8)
 - Topics: decompilation, llm, reversing, hex-rays, angr, defense, dissertation
 
 ### Abstract
