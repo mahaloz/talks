@@ -1,6 +1,7 @@
 ## Your AI Is Only as Smart as Your Decompiler: Binary Hacking in the Age of LLMs 
 - Conference: DistrictCon 2026
 - [**Slides Link**](https://docs.google.com/presentation/d/1Hi3R1meVWhT3Zi0fnk3gIE45vs1KJuioYVzCPexqLTY/edit?usp=sharing)
+- [**Video Link**](https://www.youtube.com/watch?v=ncYo6ZqSRLw) 
 - Topics: decompilation, llm, reversing, hex-rays, angr, ghidra
 
 ### Abstract
