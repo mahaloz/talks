@@ -1,0 +1,46 @@
+ษอออออหอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออหอออออป
+บ     บะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯบ     บ
+ฬอออออฮอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออฮอออออน
+บฑฑฑฑบฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐบฑฑฑฑบ
+บฑฑฑฑบฐฐฐฐฐฐฐฐฐฐฐฐฐฺฤฤฤฤฤฤฤฤฤฤฟฐฐฐฐฐฐฐฐฐฐฐฐฐบฑฑฑฑบ
+บฯฯฯฯบฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐULTRASOUNDฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐบฯฯฯฯบ
+บฑฑฑฑบฐฐฐฐฐฐฐฐฐฐฐฐฐภฤฤฤฤฤฤฤฤฤฤูฐฐฐฐฐฐฐฐฐฐฐฐฐบฑฑฑฑบ
+บฑฑฑฑบฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐบฑฑฑฑบ
+ฬอออออฮอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออฮอออออน
+บ     บฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะฯฯะบ     บ
+ศอออออสอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออสอออออผ
+|---------------------------------------------------------------------------|
+|---------------------------------------------------------------------------|
+|Target:        End Of The World!                                           |
+|---------------------------------------------------------------------------|
+|Description:   E-Diary Crackme                                             |
+|---------------------------------------------------------------------------|
+|Protection:    Password                                                    |
+|---------------------------------------------------------------------------|
+|Mission:       You have found an electronic diary which holds the date to  |
+|		the end of the world along with a note on how to survive.   |
+|									    |
+|		Unfortunately, the diary is huge and no-one knows where to  |
+|		find this date to read the instructions of how to prevent   |
+|		the disaster.					            |
+|									    |
+|		Another problem is that the owner of the diary has password |
+|		protected its contents and the text is unreadable without   |
+|		the correct password!					    |
+|									    |
+|		Your task is to use your cracking and reversing skills to   |
+|		find:							    |
+|			- The date for 'the end of the world'	            |
+|			- Instructions on how to prevent it                 |
+|			- The password to the diary                         |
+|									    |
+|		Just patching or bruteforcing is not an option here, since  |
+|		the instructions are no good, without knowledge of the date!|
+|---------------------------------------------------------------------------|
+|---------------------------------------------------------------------------|
+
+
+Contact:
+
+ultrasounduk@yahoo.com
+or EFnet #cracking4newbies nick: ultrsound
