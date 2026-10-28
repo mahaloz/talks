@@ -1,6 +1,6 @@
 ## Kuna: Building a Competitive C Decompiler Through Autonomous AI Research
 - Conference: Unprompted Con 2026
-- Slides: In Repo.
+- [Slides](./unprompted_con_talk.pptx)
 - [**Video Link**]() 
 - Topics: decompilation, llm, reversing
 
